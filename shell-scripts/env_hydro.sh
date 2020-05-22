@@ -38,6 +38,10 @@ echo "Install dependencies"
 conda install r-irkernel -y
 conda install r-devtools -y
 conda install r-ncdf4 -y
+conda install r-rncdf -y
+conda install netcdf4 -y
+conda install -c conda-forge r-ncdf4 -y
+conda install -c conda-forge r-rgdal -y
 conda install libxml2 libcurl openssl -y
 
 echo ""
