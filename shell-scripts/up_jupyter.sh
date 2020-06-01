@@ -1,18 +1,18 @@
 #!/bin/bash
 
 helpMessage() {
-   echo "Usage: `basename $0` -s n [options]"
+   echo "Usage: `basename $0` -s n [-options]"
    echo "s:"
    echo -e "\t1: allocate available node"
-   echo -e "\t2: mirrors localhost with hpv. Needed options: -n -c"
-   echo -e "\t3: run jupyterlab. Needed options: -n -p"
+   echo -e "\t2: mirrors localhost with hpc"
+   echo -e "\t3: run jupyterlab"
    echo "Options:"
    echo -e "\th: see this message"
    echo -e "\tv: get software version"
-   echo -e "\tn: node name"
-   echo -e "\tp: jupyter port"
-   echo -e "\tc: hpc connection alias|string"
-   echo -e "\te: enviroment name"
+   echo -e "\tn: node name, required in step 2"
+   echo -e "\tp: jupyter port, optional, default is 8888. If defined, it must be the same for steps 2 and 3"
+   echo -e "\tc: hpc connection alias|string, required in step 2"
+   echo -e "\te: enviroment name, optional"
    echo "Examples:"
    echo -e "\tstep 1: `basename $0` -s 1"
    echo -e "\tstep 2: `basename $0` -s 2 -n c019 -c ogun"
@@ -71,12 +71,11 @@ case $STEP in
             PORT='8888'
         fi
 
-        if [ -z $ENV ]
+        if [ $ENV ]
         then
-            helpMessage
+            source activate $ENV || conda activate $ENV
         fi
 
-        source activate $ENV || conda activate $ENV
         jupyter-lab --ip 0.0.0.0 --port $PORT --no-browser
         ;;
     ?)
